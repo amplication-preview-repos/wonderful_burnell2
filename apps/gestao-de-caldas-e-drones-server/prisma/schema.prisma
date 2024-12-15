@@ -1,0 +1,46 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Calda {
+  createdAt       DateTime     @default(now())
+  defensivosItems Defensivos[]
+  id              String       @id @default(cuid())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Area {
+  createdAt DateTime @default(now())
+  fazenda   String?
+  id        String   @id @default(cuid())
+  nome      String?
+  updatedAt DateTime @updatedAt
+}
+
+model Pulverizacao {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Drone {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Defensivos {
+  calda     Calda?   @relation(fields: [caldaId], references: [id])
+  caldaId   String?
+  createdAt DateTime @default(now())
+  descricao String?
+  id        String   @id @default(cuid())
+  nome      String?
+  tipo      String?
+  updatedAt DateTime @updatedAt
+}
